@@ -12,33 +12,45 @@
           $("#zipcode-section").show();
         }
 
-        var validZipCode = "199"; // Set the valid ZIP code for Sussex County, Delaware
-
-	$("#check-zipcode").click(function() {
-	var inputZipCode = $("#zipcode-input").val();
-	if (inputZipCode === validZipCode) {
-	  $("#sussex-county-visitor").show();
-	  $("#not-sussex-county-visitor").hide();
-	} else {
-	  $("#not-sussex-county-visitor").show();
-	  $("#sussex-county-visitor").hide();
-	}
-	});
+        $("#check-zipcode").click(function() {
+          var inputZipCode = $("#zipcode-input").val();
+          if (inputZipCode) {
+            if (countryCode === "US" && inputZipCode.startsWith("199")) {
+              $("#sussex-county-visitor").show();
+            } else if (countryCode === "US") {
+              $("#not-sussex-county-visitor").show();
+            } else {
+              $("#international-visitor").show();
+            }
+          } else {
+            $("#missing-zipcode").show();
+          }
+        });
       });
     });
-   
+    
   </script>
 </head>
-<body>  
+<body>
+  <div id="zipcode-section" style="display: none;">
     <input type="text" id="zipcode-input" placeholder="Enter your ZIP code">
-  <button id="check-zipcode">Check</button>
+    <button id="check-zipcode">Check</button>
+  </div>
 
   <div id="sussex-county-visitor" style="display: none;">
     <p>Welcome, visitor from Sussex County, Delaware!</p>
   </div>
 
   <div id="not-sussex-county-visitor" style="display: none;">
-    <p>Welcome, but you are not from Sussex County, Delaware.</p>
+    <p>Welcome, US visitor, but not from Sussex County, Delaware.</p>
+  </div>
+
+  <div id="international-visitor" style="display: none;">
+    <p>Welcome, international visitor!</p>
+  </div>
+
+  <div id="missing-zipcode" style="display: none;">
+    <p>Please enter a valid ZIP code.</p>
   </div>
 </body>
 </html>
