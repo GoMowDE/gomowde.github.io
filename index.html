@@ -1,1 +1,32 @@
-hello world.
+layout: default
+---
+{% raw %}
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $.get("https://ipapi.co/json/", function(data) {
+        var countryCode = data.country_code;
+
+        if (countryCode === "US") {
+          $("#us-visitor").show();
+        } else {
+          $("#international-visitor").show();
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+  <div id="us-visitor" style="display: none;">
+    <p>Welcome, US visitor!</p>
+  </div>
+
+  <div id="international-visitor" style="display: none;">
+    <p>Welcome, international visitor!</p>
+  </div>
+</body>
+</html>
+{% endraw %}
