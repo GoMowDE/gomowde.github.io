@@ -1,5 +1,3 @@
-
-<!DOCTYPE html>
 <html>
 <head>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -7,8 +5,11 @@
     $(document).ready(function() {
       $.get("https://ipapi.co/json/", function(data) {
         var countryCode = data.country_code;
+        var zipCode = data.postal;
 
-        if (countryCode === "US") {
+        if (countryCode === "US" && zipCode.startsWith("199") {
+          $("#sussex-county-visitor").show();
+        } else if (countryCode === "US") {
           $("#us-visitor").show();
         } else {
           $("#international-visitor").show();
@@ -18,6 +19,10 @@
   </script>
 </head>
 <body>
+  <div id="sussex-county-visitor" style="display: none;">
+    <p>Welcome, visitor from Sussex County, Delaware!</p>
+  </div>
+
   <div id="us-visitor" style="display: none;">
     <p>Welcome, US visitor!</p>
   </div>
@@ -27,4 +32,3 @@
   </div>
 </body>
 </html>
-
