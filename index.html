@@ -4,24 +4,37 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(document).ready(function() {
-      $("#check-zipcode").click(function() {
-        var zipCode = $("#zipcode-input").val();
-        if (zipCode) {
-          if (zipCode.startsWith("199")) {
-            $("#sussex-county-visitor").show();
-          } else {
-            $("#not-sussex-county-visitor").show();
-          }
-        } else {
-          $("#missing-zipcode").show();
+      $.get("https://ipapi.co/json/", function(data) {
+        var countryCode = data.country_code;
+        var zipCode = data.postal;
+
+        if (countryCode === "US") {
+          $("#zipcode-section").show();
         }
+
+        $("#check-zipcode").click(function() {
+          var inputZipCode = $("#zipcode-input").val();
+          if (inputZipCode) {
+            if (countryCode === "US" && inputZipCode.startsWith("199")) {
+              $("#sussex-county-visitor").show();
+            } else if (countryCode === "US") {
+              $("#not-sussex-county-visitor").show();
+            } else {
+              $("#international-visitor").show();
+            }
+          } else {
+            $("#missing-zipcode").show();
+          }
+        });
       });
     });
   </script>
 </head>
 <body>
-  <input type="text" id="zipcode-input" placeholder="Enter your ZIP code">
-  <button id="check-zipcode">Check</button>
+  <div id="zipcode-section" style="display: none;">
+    <input type="text" id="zipcode-input" placeholder="Enter your ZIP code">
+    <button id="check-zipcode">Check</button>
+  </div>
 
   <div id="sussex-county-visitor" style="display: none;">
     <p>Welcome, visitor from Sussex County, Delaware!</p>
@@ -29,6 +42,10 @@
 
   <div id="not-sussex-county-visitor" style="display: none;">
     <p>Welcome, US visitor, but not from Sussex County, Delaware.</p>
+  </div>
+
+  <div id="international-visitor" style="display: none;">
+    <p>Welcome, international visitor!</p>
   </div>
 
   <div id="missing-zipcode" style="display: none;">
