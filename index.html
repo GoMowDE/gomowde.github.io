@@ -1,34 +1,38 @@
+<!DOCTYPE html>
 <html>
 <head>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(document).ready(function() {
-      $.get("https://ipapi.co/json/", function(data) {
-        var countryCode = data.country_code;
-        var zipCode = data.postal;
-
-        if (countryCode === "US" && zipCode.startsWith("199") {
-          $("#sussex-county-visitor").show();
-        } else if (countryCode === "US") {
-          $("#us-visitor").show();
+      $("#check-zipcode").click(function() {
+        var zipCode = $("#zipcode-input").val();
+        if (zipCode) {
+          if (zipCode.startsWith("199")) {
+            $("#sussex-county-visitor").show();
+          } else {
+            $("#not-sussex-county-visitor").show();
+          }
         } else {
-          $("#international-visitor").show();
+          $("#missing-zipcode").show();
         }
       });
     });
   </script>
 </head>
 <body>
+  <input type="text" id="zipcode-input" placeholder="Enter your ZIP code">
+  <button id="check-zipcode">Check</button>
+
   <div id="sussex-county-visitor" style="display: none;">
     <p>Welcome, visitor from Sussex County, Delaware!</p>
   </div>
 
-  <div id="us-visitor" style="display: none;">
-    <p>Welcome, US visitor!</p>
+  <div id="not-sussex-county-visitor" style="display: none;">
+    <p>Welcome, US visitor, but not from Sussex County, Delaware.</p>
   </div>
 
-  <div id="international-visitor" style="display: none;">
-    <p>Welcome, international visitor!</p>
+  <div id="missing-zipcode" style="display: none;">
+    <p>Please enter a valid ZIP code.</p>
   </div>
 </body>
 </html>
