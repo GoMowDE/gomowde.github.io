@@ -12,22 +12,21 @@
           $("#zipcode-section").show();
         }
 
-        $("#check-zipcode").click(function() {
-          var inputZipCode = $("#zipcode-input").val();
-          if (inputZipCode) {
-            if (countryCode === "US" && inputZipCode.startsWith("199")) {
-              $("#sussex-county-visitor").show();
-            } else if (countryCode === "US") {
-              $("#not-sussex-county-visitor").show();
-            } else {
-              $("#international-visitor").show();
-            }
-          } else {
-            $("#missing-zipcode").show();
-          }
-        });
+        var validZipCode = "199"; // Set the valid ZIP code for Sussex County, Delaware
+
+	$("#check-zipcode").click(function() {
+	var inputZipCode = $("#zipcode-input").val();
+	if (inputZipCode === validZipCode) {
+	  $("#sussex-county-visitor").show();
+	  $("#not-sussex-county-visitor").hide();
+	} else {
+	  $("#not-sussex-county-visitor").show();
+	  $("#sussex-county-visitor").hide();
+	}
+	});
       });
     });
+   
   </script>
 </head>
 <body>
